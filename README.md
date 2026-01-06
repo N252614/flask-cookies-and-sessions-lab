@@ -121,3 +121,43 @@ Best Practice documentation steps:
 CodeGrade will use the same test suite as the test suite included.
 
 Once all tests are passing, commit and push your work using `git` to submit to CodeGrade through Canvas.
+
+
+# Flask Cookies and Sessions Lab
+
+This project implements a simple backend paywall using Flask sessions.
+Users can view up to three articles per session. After that, the API
+returns a 401 Unauthorized response.
+
+## Setup
+
+### Backend
+```bash
+pipenv install
+pipenv shell
+cd server
+flask db upgrade
+python seed.py
+python app.py
+```
+### Frontend
+```bash
+npm install --prefix client
+npm start --prefix client
+```
+npm install --prefix client
+npm start --prefix client
+### Paywall
+After three article views, the API returns:
+{ "message": "Maximum pageview limit reached" }
+Status code: 401
+
+Session data can be cleared at:
+http://localhost:5555/clear
+
+## Screenshot
+
+The screenshot below demonstrates the paywall behavior. After viewing three articles,
+access to additional articles is restricted and the API returns a 401 Unauthorized
+response.
+![Paywall Demo](./screenshot.png)
