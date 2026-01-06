@@ -27,7 +27,29 @@ def index_articles():
 
 @app.route('/articles/<int:id>')
 def show_article(id):
-    pass
+  # Find the article by its id
+    article = Article.query.get(id)
+
+    # If no article exists, return a 404 response
+    if not article:
+        return {"message": "Article not found"}, 404
+
+    # Initialize page view counter if it does not exist
+    if 'page_views' not in session:
+        session['page_views'] = 0
+
+    # Increment page view counter
+    session['page_views'] += 1
+
+    # If user has exceeded the maximum number of page views
+    if session['page_views'] > 3:
+        return {"message": "Maximum pageview limit reached"}, 401
+
+    # Serialize the article into a Python dictionary
+    article_dict = ArticleSchema().dump(article)
+
+    # Return JSON response
+    return make_response(article_dict, 200)
 
 
 if __name__ == '__main__':
